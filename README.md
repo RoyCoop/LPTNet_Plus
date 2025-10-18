@@ -1,2 +1,2 @@
-# LPTNet-
+# LPTNet+
 LPTNet+ repository
