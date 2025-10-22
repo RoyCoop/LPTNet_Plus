@@ -13,5 +13,5 @@ python /YOUR_PATH/Sim_Main_train_script.py \
 
 Example inference:
 python /YOUR_PATH/Sim_Main_train_script.py \
-    --data_path='/YOUR_PATH/saved_models_1d/lpt_sim_final_M200 with 29.87dB.pth'
+    --data_path='/YOUR_PATH/saved_models_1d/lpt_sim_final_M200 with 29.87dB.pth' \ 
     --save_dir='/YOUR_PATH/spectrogram_dataset_small/spectrogram_dataset_small_test.pt'
