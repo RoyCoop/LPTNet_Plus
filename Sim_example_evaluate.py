@@ -1,3 +1,4 @@
+import argparse
 import torch, matplotlib.pyplot as plt, numpy as np
 from Sim_LSCSnet_model import LPTNetIF
 
@@ -18,7 +19,17 @@ def load_dataset(pt_path, device):
     return blob_sp
 
 
-def main(LPT_WEIGHTS, TEST_PT, DEVICE):
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--model_dir",
+                   help="folder with train.pt and val.pt containing SP tensors",
+                   default=r"saved_models_1d\lpt_sim_final_M200 with 29.87dB.pth")
+    p.add_argument("--data_path",
+                   default=r"spectrogram_dataset_small\spectrogram_dataset_small_test.pt")
+    opt = p.parse_args()
+    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    LPT_WEIGHTS = opt.model_dir
+    TEST_PT = opt.data_path
     sps = load_dataset(TEST_PT, DEVICE)
     M = int(LPT_WEIGHTS[LPT_WEIGHTS.find('_M') + 2:LPT_WEIGHTS.find(' w')])
     model = LPTNetIF(iters=2, M=M).to(DEVICE)
@@ -109,7 +120,5 @@ def main(LPT_WEIGHTS, TEST_PT, DEVICE):
 # np.savetxt("LPT.csv", psnr_list, delimiter=",", fmt="%f")  # column)
 
 if __name__ == "__main__":
-    LPT_WEIGHTS = r"saved_models_1d\lpt_sim_final_M200 with 29.87dB.pth"  # trained LPTNet-IF
-    TEST_PT = r"spectrogram_dataset_small\spectrogram_dataset_small_test.pt"
-    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    main(LPT_WEIGHTS, TEST_PT, DEVICE)
+    main()
+
